@@ -16,9 +16,6 @@ void GraphicsBufferManager::addBuffer(std::string key, GraphicsBuffer* buffer)
 	if (mBufferMap.count(key) == 0)
 	{
 		mBufferMap.insert({ key, buffer });
-		//mBufferMap.insert(std::map<std::string, GraphicsBuffer*>::value_type(key, buffer));
-		//mBufferMap[key] = buffer;
-		//mBufferMap.emplace(key, buffer);
 	}
 	else
 	{

@@ -9,7 +9,7 @@ using namespace std;
 class HUD
 {
 public:
-	HUD(GraphicsSystem& graphicsSystem);
+	HUD();
 	~HUD();
 	void startScreen();
 	void pauseScreen();
@@ -18,12 +18,12 @@ public:
 	void fps(float fps);
 	void timer(int timer);
 private:
-	GraphicsSystem* mGraphicsSystem;
+	GraphicsSystem* mpGraphicsSystem;
 	const string ASSET_PATH = "..\\..\\shared\\assets\\";
 	const string FONT_FILENAME = "cour.ttf";
 	const int FONT_SIZE = 50;
 	const int DISP_WIDTH = 800;
 	const int DISP_HEIGHT = 600;
 	Color mWhite = Color(255, 255, 255);
-	Font* mpFont = new Font(ASSET_PATH + FONT_FILENAME, FONT_SIZE);
+	Font* mpFont;
 };

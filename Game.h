@@ -6,6 +6,7 @@
 #include <string>
 #include <assert.h>
 #include <EventListener.h>
+#include "HUD.h"
 using namespace std;
 
 class GraphicsSystem;
@@ -27,6 +28,7 @@ private:
 	
 	GraphicsBufferManager* mpGraphicsBufferManager = nullptr;
 	UnitManager* mpUnitManager = nullptr;
+	HUD* mpHUD = nullptr;
 
 	bool mIsRunning = false;
 	float mLoopTime = 16.7f;
@@ -36,15 +38,22 @@ private:
 	// Constructor/Destructor 
 	Game() {};
 	~Game();
+	float elapsedGameTime = 0;
+	int mPoints = 10;
+	int mPointIncrease = 1;
+	int mPointDecrease = 5;
+
+	Color mBlack = Color(0, 0, 0);
+	const int DISP_WIDTH = 800;
+	const int DISP_HEIGHT = 600;
 
 public:
 	////-FUNCTIONS-
 
 	void doLoop();
 
-	void input();
 	void update(float dt);
-	void draw();
+	void draw(float dt);
 	
 	bool init();
 	void cleanup();

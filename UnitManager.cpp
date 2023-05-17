@@ -7,12 +7,7 @@ UnitManager::UnitManager()
 
 UnitManager::~UnitManager()
 {
-	//not sure what to do here
-	/*for (unsigned int i = 0; i < mpUnits.size(); i++)
-	{
-		delete mpUnits[i];
-	}*/
-	//clear();
+	clear();
 	// maybe a cleanup(); ?
 }
 
@@ -27,7 +22,14 @@ void UnitManager::initUnitManager(std::vector<Animation*> initAnims, int poolSiz
 
 void UnitManager::clear()
 {
-	//not sure what to do here
+	for (unsigned int i = 0; i < mpUnitPool.size(); i++)
+	{
+		delete mpUnitPool[i];
+	}
+	for (unsigned int i = 0; i < mpActiveUnits.size(); i++)
+	{
+		delete mpActiveUnits[i];
+	}
 }
 
 void UnitManager::enableUnit()
