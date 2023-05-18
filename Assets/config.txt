@@ -1,0 +1,6 @@
+PointsGain
+1
+PointsLoss
+5
+StartPoints
+10

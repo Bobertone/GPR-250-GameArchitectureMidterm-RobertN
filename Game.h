@@ -6,7 +6,7 @@
 #include <string>
 #include <assert.h>
 #include <EventListener.h>
-#include "HUD.h"
+
 using namespace std;
 
 class GraphicsSystem;
@@ -28,6 +28,8 @@ private:
 	
 	GraphicsBufferManager* mpGraphicsBufferManager = nullptr;
 	UnitManager* mpUnitManager = nullptr;
+	DataManager* mpDataManager = nullptr;
+
 	HUD* mpHUD = nullptr;
 
 	bool mIsRunning = false;
@@ -67,5 +69,6 @@ public:
 	static Game* getInstance() { assert(mspGame != nullptr); return mspGame; };
 
 	GraphicsSystem* getGraphicsSystem() { return mpGraphicsSystem; }
+	DataManager* getDataManager() { return mpDataManager; }
 
 };

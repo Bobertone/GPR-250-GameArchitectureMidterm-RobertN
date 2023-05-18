@@ -117,6 +117,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="DataManager.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="functions.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -138,6 +139,7 @@
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Color.h" />
+    <ClInclude Include="DataManager.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="functions.h" />
     <ClInclude Include="Game.h" />

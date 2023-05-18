@@ -3,6 +3,7 @@
 
 #include "UnitManager.h"
 #include "GraphicsBufferManager.h"
+#include "DataManager.h"
 
 #include "Animation.h"
 #include "Unit.h"
@@ -66,7 +67,8 @@ void Game::draw(float dt)
 
 bool Game::init()
 {
-	const string ASSET_PATH = "..\\..\\shared\\assets\\";
+	const string SHARED_ASSETS_PATH = "..\\..\\shared\\assets\\";
+	const string PRIVATE_ASSETS_PATH = "\\assets\\config.txt";
 	const string SMURFS_FILENAME = "smurf_sprites.png";
 	const string DEAN_FILENAME = "dean_sprites.png";
 	const string NUMBERED_FILENAME = "smurf_sprites_numbered.png";
@@ -75,7 +77,7 @@ bool Game::init()
 	const int DISP_WIDTH = 800;
 	const int DISP_HEIGHT = 600;
 
-	//new new important stuff (event listeners)
+	//event listeners
 
 	EventSystem::getInstance()->addListener((EventType)CLOSE_GAME, this);
 	EventSystem::getInstance()->addListener((EventType)PLACE_SMURF, this);
@@ -83,12 +85,13 @@ bool Game::init()
 	EventSystem::getInstance()->addListener((EventType)TOGGLE_ANIMATION, this);
 	EventSystem::getInstance()->addListener((EventType)SWAP_ANIMATION, this);
 
-	//old new important stuff
+	//init member objects
 	mpGraphicsSystem = new GraphicsSystem();
 	mpInputSystem = new InputSystem();
 	mpInputTranslator = new InputTranslator();
 	mpGraphicsBufferManager = new GraphicsBufferManager();
 	mpUnitManager = new UnitManager();
+	mpDataManager = new DataManager(PRIVATE_ASSETS_PATH);
 
 	if (!mpGraphicsSystem->init(DISP_WIDTH, DISP_HEIGHT))
 	{
@@ -106,8 +109,8 @@ bool Game::init()
 
 	mpHUD = new HUD();
 
-	GraphicsBuffer* mpSmurfSheetBuffer = new GraphicsBuffer(ASSET_PATH + SMURFS_FILENAME);
-	GraphicsBuffer* mpDeanSheetBuffer = new GraphicsBuffer(ASSET_PATH + DEAN_FILENAME);
+	GraphicsBuffer* mpSmurfSheetBuffer = new GraphicsBuffer(SHARED_ASSETS_PATH + SMURFS_FILENAME);
+	GraphicsBuffer* mpDeanSheetBuffer = new GraphicsBuffer(SHARED_ASSETS_PATH + DEAN_FILENAME);
 	GraphicsBuffer* mpBackgroundBuffer = new GraphicsBuffer(DISP_WIDTH, DISP_HEIGHT, mBlack);
 	mpGraphicsBufferManager->addBuffer("SmurfSheet", mpSmurfSheetBuffer);
 	mpGraphicsBufferManager->addBuffer("DeanSheet", mpDeanSheetBuffer);
@@ -120,6 +123,8 @@ bool Game::init()
 
 void Game::cleanup()
 {
+	delete mpDataManager;
+	delete mpHUD;
 	delete mpInputTranslator;
 	delete mpGraphicsBufferManager;
 	delete mpUnitManager;
