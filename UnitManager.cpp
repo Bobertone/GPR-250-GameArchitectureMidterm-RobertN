@@ -32,12 +32,12 @@ void UnitManager::clear()
 	}
 }
 
-void UnitManager::enableUnit()
+Unit* UnitManager::enableUnit()
 {
 	Unit* tempUnit = mpUnitPool.at(0);
 	mpUnitPool.erase(mpUnitPool.begin());
 	mpActiveUnits.push_back(tempUnit);
-	delete tempUnit;
+	return tempUnit;
 }
 
 void UnitManager::disableUnit(Unit* theUnit)

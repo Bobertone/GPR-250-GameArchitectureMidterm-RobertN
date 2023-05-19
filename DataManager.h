@@ -6,6 +6,7 @@ class DataManager :public Trackable
 {
 public:
 	DataManager(std::string filepath);
+	~DataManager() {};
 
 	float getFloat(const std::string& key);
 	std::string getString(const std::string& key);

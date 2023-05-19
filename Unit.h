@@ -7,15 +7,19 @@ class Unit : public Trackable
 private:
 	////-DATA-
 	
-	// location(x, y)
-	Vector2D mLocation;
-	int mCurrentAnimation;
-	bool mIsDead;
-	bool mEnabled = false;
-	// animation(s)
-	std::vector<Animation*> mpAnimations;
+	//Status Data
+	bool mIsDead; //old
+	bool mEnabled = false; //new
+
+	//Movement Data
 	Vector2D mOrigin = Vector2D(0, 0);
-	float mSpeed;
+	Vector2D mLoc;
+	Vector2D mVel;
+
+	//Animation Data
+	int mCurrentAnimation;
+	std::vector<Animation*> mpAnimations;
+	
 
 public:
 	////-FUNCTIONS-
@@ -34,13 +38,14 @@ public:
 	void swapAnimation();
 	
 	Animation* getAnimation() { return mpAnimations[mCurrentAnimation]; }
-	Vector2D getPosition() { return mLocation; }
-	void setPosition(Vector2D newPos) { mLocation = newPos; }
+	Vector2D getPosition() { return mLoc; }
+	void setPosition(Vector2D newPos) { mLoc = newPos; }
+	void setVelocity(Vector2D newDir, float newSpeed);
 
-	bool isDead() { return mIsDead; }
-	bool isEnabled() { return mEnabled; }
-	void kill() { mIsDead = true; }
-	void disable();
+	bool isDead() { return mIsDead; } //old
+	bool isEnabled() { return mEnabled; } //new
+	void kill() { mIsDead = true; } //old
+	void disable(); //new
 
 	void reset();
 

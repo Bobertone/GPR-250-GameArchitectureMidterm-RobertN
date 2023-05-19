@@ -37,7 +37,7 @@ public:
 	void clear();
 
 	// Some way of adding / deleting / getting units
-	void enableUnit();
+	Unit* enableUnit();
 	void disableUnit(Unit* unit);
 	void disableUnit(unsigned int position);
 

@@ -4,7 +4,7 @@
 
 Unit::Unit(Vector2D loc, std::vector<Animation*> animations) 
 {
-	mLocation = loc;
+	mLoc = loc;
 	mpAnimations = animations;
 	mCurrentAnimation = 0;
 	mIsDead = false;
@@ -20,12 +20,17 @@ Unit::~Unit()
 
 void Unit::update(float dt)
 {
+	//Update Position
+	mLoc += mVel * (dt/1000);
+	//Update Animation
 	mpAnimations[mCurrentAnimation]->update(dt);
+
+
 }
 
 void Unit::draw()
 {
-	Game::getInstance()->getGraphicsSystem()->drawCentered(mLocation, mpAnimations[mCurrentAnimation]->getCurrentSprite());
+	Game::getInstance()->getGraphicsSystem()->drawCentered(mLoc, mpAnimations[mCurrentAnimation]->getCurrentSprite());
 }
 
 void Unit::swapAnimation()
@@ -40,6 +45,12 @@ void Unit::swapAnimation()
 	}
 }
 
+void Unit::setVelocity(Vector2D newDir, float newSpeed)
+{
+	mVel = (newDir.normalize() * newSpeed);
+	
+}
+
 void Unit::disable()
 {
 	mEnabled = false;
@@ -47,7 +58,7 @@ void Unit::disable()
 
 void Unit::reset()
 {
-	mSpeed = 0;
-	mLocation = mOrigin;
+	mVel = mOrigin;
+	mLoc = mOrigin;
 
 }

@@ -70,5 +70,6 @@ public:
 
 	GraphicsSystem* getGraphicsSystem() { return mpGraphicsSystem; }
 	DataManager* getDataManager() { return mpDataManager; }
+	UnitManager* getUnitManager() { return mpUnitManager; }
 
 };

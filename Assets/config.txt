@@ -1,3 +1,16 @@
+UNIT SPAWN DATA
+SpeedMin
+1
+SpeedMax
+3
+SpeedIncrease
+0.01
+SpawnChance
+0.30
+SpawnIncrease
+0.001
+
+POINTS DATA
 PointsGain
 1
 PointsLoss

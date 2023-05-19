@@ -135,6 +135,7 @@
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="UnitManager.cpp" />
+    <ClCompile Include="UnitSpawner.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -157,6 +158,7 @@
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Unit.h" />
     <ClInclude Include="UnitManager.h" />
+    <ClInclude Include="UnitSpawner.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
