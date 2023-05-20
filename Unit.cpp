@@ -4,20 +4,24 @@
 #include "GameEvent.h"
 #include "EventSystem.h"
 
-Unit::Unit(Vector2D loc, std::vector<Animation*> animations) 
+Unit::Unit(Vector2D loc, const std::vector<Animation>& animations) 
 {
 	mLoc = loc;
-	mpAnimations = animations;
+	mAnimations = animations;
+	mCurrentAnimation = 0;
+	mEnabled = false;
+}
+
+Unit::Unit(const std::vector<Animation>& animations)
+{
+	mLoc = Game::getInstance()->getGraphicsSystem()->getCenter();
+	mAnimations = animations;
 	mCurrentAnimation = 0;
 	mEnabled = false;
 }
 
 Unit::~Unit()
 {
-	for (unsigned int i = 0; i < mpAnimations.size(); i++)
-	{
-		delete mpAnimations[i];
-	}
 }
 
 void Unit::update(float dt)
@@ -25,9 +29,10 @@ void Unit::update(float dt)
 	//Update Position
 	mLoc += mVel * (dt/1000);
 	//Update Animation
-	mpAnimations[mCurrentAnimation]->update(dt);
+	mAnimations[mCurrentAnimation].update(dt);
 	//Check if unit is off screen, disable if so
-	if (mLoc.getX() > DISP_WIDTH || mLoc.getX() < 0 || mLoc.getY() > DISP_HEIGHT || mLoc.getY() < 0)
+	if (mLoc.getX() > Game::getInstance()->getGraphicsSystem()->getWidth() || mLoc.getX() < 0 ||
+		mLoc.getY() > Game::getInstance()->getGraphicsSystem()->getHeight() || mLoc.getY() < 0)
 	{
 		if (mIsRed) 
 		{
@@ -43,12 +48,12 @@ void Unit::update(float dt)
 
 void Unit::draw()
 {
-	Game::getInstance()->getGraphicsSystem()->drawCentered(mLoc, mpAnimations[mCurrentAnimation]->getCurrentSprite());
+	Game::getInstance()->getGraphicsSystem()->drawCentered(mLoc, mAnimations[mCurrentAnimation].getCurrentSprite());
 }
 
 void Unit::swapAnimation()
 {
-	if ((int)mCurrentAnimation >= (int)mpAnimations.size()-1)
+	if ((int)mCurrentAnimation >= (int)mAnimations.size()-1)
 	{
 		mCurrentAnimation = 0;
 	}
@@ -72,6 +77,6 @@ void Unit::disable()
 void Unit::reset()
 {
 	mVel = mOrigin;
-	mLoc = mOrigin;
+	mLoc = Game::getInstance()->getGraphicsSystem()->getCenter();
 
 }

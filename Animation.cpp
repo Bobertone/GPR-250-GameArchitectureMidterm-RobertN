@@ -6,14 +6,14 @@ Animation::Animation(GraphicsBuffer* spriteSheetBuffer, int rows, int columns)
 	{
 		for (int x = 0; x < columns; x++)
 		{
-			Sprite* frame = new Sprite(spriteSheetBuffer, 
+			Sprite frame(spriteSheetBuffer, 
 				Vector2D(
 					x * spriteSheetBuffer->getWidth()/ columns,
 					y * spriteSheetBuffer->getHeight()/rows),
 				spriteSheetBuffer->getWidth() / columns,
 				spriteSheetBuffer->getHeight() / rows);
 
-			mpSprites.push_back(frame);
+			mSprites.push_back(frame);
 		}
 	}
 
@@ -21,10 +21,6 @@ Animation::Animation(GraphicsBuffer* spriteSheetBuffer, int rows, int columns)
 
 Animation::~Animation()
 {
-	for (unsigned int i = 0; i < mpSprites.size(); i++)
-	{
-		delete mpSprites[i];
-	}
 }
 
 void Animation::update(float dt)
@@ -38,7 +34,7 @@ void Animation::update(float dt)
 	{
 		elapsedTime = 0;
 
-		if ((int)mCurrentSprite >= (int)mpSprites.size()-1)
+		if ((int)mCurrentSprite >= (int)mSprites.size()-1)
 		{
 			if (mShouldLoop)
 			{

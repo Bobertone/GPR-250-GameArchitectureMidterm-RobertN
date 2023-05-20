@@ -13,6 +13,7 @@ using namespace std;
 
 class GraphicsSystem;
 class InputSystem;
+class UnitSpawner;
 class UnitManager;
 class GraphicsBufferManager;
 class InputTranslator;
@@ -36,10 +37,13 @@ private:
 	InputTranslator* mpInputTranslator = nullptr;
 	
 	GraphicsBufferManager* mpGraphicsBufferManager = nullptr;
-	UnitManager* mpUnitManager = nullptr;
 	DataManager* mpDataManager = nullptr;
+	UnitManager* mpUnitManager = nullptr;
+	
+	UnitSpawner* mpUnitSpawner = nullptr;
 
 	HUD* mpHUD = nullptr;
+	
 	bool mGameStart = true;
 	bool mGameOver = false;
 	bool mIsPaused = true;
@@ -59,7 +63,8 @@ private:
 	Color mBlack = Color(0, 0, 0);
 	const int DISP_WIDTH = 800;
 	const int DISP_HEIGHT = 600;
-
+	//Game::getInstance()->getGraphicsSystem()->getHeight()
+	//Game::getInstance()->getGraphicsSystem()->getWidth()
 public:
 	////-FUNCTIONS-
 

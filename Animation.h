@@ -9,7 +9,7 @@ private:
 	////-DATA-
 	
 	// A “list” of Sprites (stl vector?)
-	std::vector<Sprite*> mpSprites;
+	std::vector<Sprite> mSprites;
 
 	// Timing info
 	float mTimeBetweenSprites = 33.33f;
@@ -35,7 +35,7 @@ public:
 	void update(float dt);
 
 	// getCurrentSprite
-	Sprite* getCurrentSprite() { return mpSprites[mCurrentSprite]; }
+	Sprite* getCurrentSprite() { return &mSprites[mCurrentSprite]; }
 
 	// speed up / slow down – adjust timing to make animation faster or slower
 	void changeAnimationSpeed(bool speedUp);

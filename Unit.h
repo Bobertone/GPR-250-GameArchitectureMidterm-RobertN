@@ -13,21 +13,20 @@ private:
 
 	//Movement Data
 	Vector2D mOrigin = Vector2D(0, 0);
-	const int DISP_WIDTH = 800;
-	const int DISP_HEIGHT = 600;
 	Vector2D mLoc;
 	Vector2D mVel;
 
 	//Animation Data
 	int mCurrentAnimation;
-	std::vector<Animation*> mpAnimations;
+	std::vector<Animation> mAnimations;
 	
 
 public:
 	////-FUNCTIONS-
 	
 	// constructor(s) / destructor
-	Unit(Vector2D loc, std::vector<Animation*> animations);
+	Unit(Vector2D loc, const std::vector<Animation>& animations);
+	Unit(const std::vector<Animation>& animations);
 	~Unit();
 
 	// update – adjusts the state of the Unit – in this case at minimum will call animation’s update function
@@ -39,12 +38,13 @@ public:
 	// swapAnimation – switch to a new animation
 	void swapAnimation();
 	
-	Animation* getAnimation() { return mpAnimations[mCurrentAnimation]; }
+	Animation* getAnimation() { return &mAnimations[mCurrentAnimation]; }
 	Vector2D getPosition() { return mLoc; }
 	void setPosition(Vector2D newPos) { mLoc = newPos; }
 	void setVelocity(Vector2D newDir, float newSpeed);
 
 	bool isEnabled() { return mEnabled; }
+	void enable() { mEnabled = true; }
 	void disable();
 
 	void reset();

@@ -14,7 +14,6 @@ public:
 	void update(float dt);
 	void spawnUnit();
 private:
-	DataManager* mpDataManager;
 	float mSpeedMin;
 	float mSpeedMax;
 	float mSpeedIncrease;

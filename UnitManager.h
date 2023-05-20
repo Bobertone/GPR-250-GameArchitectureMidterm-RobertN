@@ -19,18 +19,19 @@ private:
 	//The pool of Units
 	std::vector<Unit*> mpUnitPool;
 
-	Vector2D mOrigin = Vector2D(0, 0);
+	int mPoolSize = 100;
 
-	int poolSize = 100;
+	std::vector<Animation> mpAnimations;
 
 public:
 
 	////-FUNCTIONS-
 
 	// Constructor / destructor
-	UnitManager();
+	//UnitManager(std::vector<Animation*> orbAnimations);
+	UnitManager(const vector<Animation>& orbAnimations);
 	~UnitManager();
-	void initUnitManager(std::vector<Animation*> initAnims, int poolSize);
+	//void initUnitManager(std::vector<Animation> initAnims, int poolSize);
 
 	//~UnitManager() { clear(); };
 	//Clear - remove and delete all units

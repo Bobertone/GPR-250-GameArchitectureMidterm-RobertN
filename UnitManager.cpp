@@ -1,8 +1,14 @@
 #include "UnitManager.h"
+#include "Game.h"
+#include "GraphicsSystem.h"
 
-UnitManager::UnitManager()
+UnitManager::UnitManager(const vector<Animation>& orbAnimations)
 {
-	std::vector<Unit*> mpUnitPool(poolSize);
+	mpAnimations = orbAnimations;
+	for (int i = 0; i < mPoolSize; i++)
+	{
+		mpUnitPool.push_back(new Unit(mpAnimations));
+	}
 }
 
 UnitManager::~UnitManager()
@@ -11,14 +17,6 @@ UnitManager::~UnitManager()
 	// maybe a cleanup(); ?
 }
 
-void UnitManager::initUnitManager(std::vector<Animation*> initAnims, int poolSize)
-{
-	mpUnitPool.reserve(poolSize);
-	while (mpUnitPool.size() < poolSize)
-	{
-		mpUnitPool.push_back(new Unit(mOrigin, initAnims));
-	}
-};
 
 void UnitManager::clear()
 {
@@ -34,10 +32,18 @@ void UnitManager::clear()
 
 Unit* UnitManager::enableUnit()
 {
-	Unit* tempUnit = mpUnitPool.at(0);
+	Unit* pTempUnit = mpUnitPool.at(0);
+	if (pTempUnit == nullptr)
+	{
+		cout << "Unit Pool Empty" << endl;
+		return nullptr;
+	}
 	mpUnitPool.erase(mpUnitPool.begin());
-	mpActiveUnits.push_back(tempUnit);
-	return tempUnit;
+	mpActiveUnits.push_back(pTempUnit);
+
+	pTempUnit->enable();
+
+	return pTempUnit;
 }
 
 void UnitManager::disableUnit(Unit* theUnit)

@@ -33,9 +33,9 @@ float DataManager::getFloat(const std::string& key)
         return 1;
     }
 
-    while (std::getline(inputFile, line)) {
-        targetFloat = std::stof(line);
-    }
+    std::getline(inputFile, line);
+    targetFloat = std::stof(line);
+    
 
     inputFile.close();
     return targetFloat;

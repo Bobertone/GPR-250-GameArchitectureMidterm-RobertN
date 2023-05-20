@@ -1,5 +1,6 @@
 #include "UnitSpawner.h"
 #include "Game.h"
+#include "GraphicsSystem.h"
 #include "Unit.h"
 #include "UnitManager.h"
 
@@ -10,16 +11,16 @@ UnitSpawner::UnitSpawner()
 
 bool UnitSpawner::init()
 {
-	mpDataManager = Game::getInstance()->getDataManager();
-	if (mpDataManager = nullptr) 
+	DataManager* pDataManager = Game::getInstance()->getDataManager();
+	if (pDataManager == nullptr)
 	{
 		return false;
 	}
-	mSpeedMin = mpDataManager->getFloat("SpeedMin");
-	mSpeedMax = mpDataManager->getFloat("SpeedMax");
-	mSpeedIncrease = mpDataManager->getFloat("SpeedIncrease");
-	mSpawnChance = mpDataManager->getFloat("SpawnChance");
-	mSpawnIncrease = mpDataManager->getFloat("SpawnIncrease");
+	mSpeedMin = pDataManager->getFloat("SpeedMin");
+	mSpeedMax = pDataManager->getFloat("SpeedMax");
+	mSpeedIncrease = pDataManager->getFloat("SpeedIncrease");
+	mSpawnChance = pDataManager->getFloat("SpawnChance");
+	mSpawnIncrease = pDataManager->getFloat("SpawnIncrease");
 	return true;
 }
 
@@ -33,7 +34,7 @@ void UnitSpawner::update(float dt)
 	}
 	mSpeedMin += mSpeedIncrease * (dt / 1000);
 	mSpeedMax += mSpeedIncrease * (dt / 1000);
-
+	cout << dt << " / 1000" << endl;
 	mSpawnChance += mSpawnIncrease * (dt / 1000);
 }
 
@@ -44,15 +45,15 @@ void UnitSpawner::spawnUnit()
 	if (pUnit == nullptr) return;
 
 	//random spawn position
-	int randXPos = (rand() % (mSpawnAreaWidth + 1)) - mSpawnAreaWidth / 2;
-	int randYPos = (rand() % (mSpawnAreaHeight + 1)) - mSpawnAreaHeight / 2;
+	int randXPos = ((rand() % (mSpawnAreaWidth + 1)) - mSpawnAreaWidth / 2) + Game::getInstance()->getGraphicsSystem()->getWidth() / 2;
+	int randYPos = ((rand() % (mSpawnAreaHeight + 1)) - mSpawnAreaHeight / 2) + Game::getInstance()->getGraphicsSystem()->getHeight() / 2;
 	Vector2D spawnPoint = Vector2D(randXPos, randYPos);
 	pUnit->setPosition(spawnPoint);
 
 	//random velocity
 	int randXDir = (rand() % 1001) - 500;
 	int randYDir = (rand() % 1001) - 500;
-	float speed = lerp(mSpeedMin, mSpeedMax, ((rand() % 101) / (float)100));
+	float speed = lerp(mSpeedMin, mSpeedMax, ((rand() % 101)));
 	pUnit->setVelocity(Vector2D(randXDir, randYDir), speed);
 
 	int randColor = rand() % 2;

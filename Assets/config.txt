@@ -1,10 +1,10 @@
 UNIT SPAWN DATA
 SpeedMin
-1
+20
 SpeedMax
-3
+40
 SpeedIncrease
-0.01
+0.1
 SpawnChance
 0.30
 SpawnIncrease

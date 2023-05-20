@@ -34,6 +34,7 @@ public:
 	//Accessors (height, width, back buffer)
 	int getHeight()	{ return al_get_display_height(mpDisplay); }
 	int getWidth()	{ return al_get_display_width(mpDisplay);}
+	Vector2D getCenter() { return Vector2D(getWidth()/2, getHeight()/2); }
 
 	GraphicsBuffer* getBackbuffer() { return mpBuffer; }
 

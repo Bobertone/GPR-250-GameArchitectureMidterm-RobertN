@@ -7,6 +7,7 @@
 
 #include "Animation.h"
 #include "Unit.h"
+#include "UnitSpawner.h"
 #include "HUD.h"
 
 #include "EventSystem.h"
@@ -58,7 +59,7 @@ void Game::doLoop()
 void Game::update(float dt)
 {
 	mpUnitManager->update(dt);
-
+	mpUnitSpawner->update(dt);
 	if(mPoints < 0)
 	{
 		mGameOver = true;
@@ -118,9 +119,8 @@ bool Game::init()
 	mpInputSystem = new InputSystem();
 	mpInputTranslator = new InputTranslator();
 	mpGraphicsBufferManager = new GraphicsBufferManager();
-	mpUnitManager = new UnitManager();
-	mpDataManager = new DataManager(PRIVATE_ASSETS_PATH);
-
+	mpDataManager = new DataManager(PRIVATE_ASSETS_PATH + CONFIG_FILENAME);
+	
 	if (!mpGraphicsSystem->init(DISP_WIDTH, DISP_HEIGHT))
 	{
 		cout << "ERROR - Init failed\n";
@@ -139,10 +139,21 @@ bool Game::init()
 
 	GraphicsBuffer* mpSmurfSheetBuffer = new GraphicsBuffer(SHARED_ASSETS_PATH + SMURFS_FILENAME);
 	GraphicsBuffer* mpDeanSheetBuffer = new GraphicsBuffer(SHARED_ASSETS_PATH + DEAN_FILENAME);
-	GraphicsBuffer* mpBackgroundBuffer = new GraphicsBuffer(DISP_WIDTH, DISP_HEIGHT, mBlack);
+	GraphicsBuffer* mpBackgroundBuffer = new GraphicsBuffer(Game::getInstance()->getGraphicsSystem()->getWidth(), Game::getInstance()->getGraphicsSystem()->getHeight(), mBlack);
 	mpGraphicsBufferManager->addBuffer("SmurfSheet", mpSmurfSheetBuffer);
 	mpGraphicsBufferManager->addBuffer("DeanSheet", mpDeanSheetBuffer);
 	mpGraphicsBufferManager->addBuffer("Background", mpBackgroundBuffer);
+	
+	Animation mpSmurfAnim = Animation(mpGraphicsBufferManager->getBuffer("SmurfSheet"), 4, 4);
+	Animation mpDeanAnim = Animation(mpGraphicsBufferManager->getBuffer("DeanSheet"), 4, 4);
+
+	vector<Animation> mpAnimations = vector<Animation>();
+
+	mpAnimations.push_back(mpSmurfAnim);
+	mpAnimations.push_back(mpDeanAnim);
+
+	mpUnitManager = new UnitManager(mpAnimations);
+	mpUnitSpawner = new UnitSpawner();
 
 	mIsRunning = true;
 
@@ -151,6 +162,7 @@ bool Game::init()
 
 void Game::cleanup()
 {
+	delete mpUnitSpawner;
 	delete mpDataManager;
 	delete mpHUD;
 	delete mpInputTranslator;
@@ -184,22 +196,22 @@ void Game::handleEvent(const Event& theEvent)
 			mIsPaused = false;
 		}
 		break;
-	case GameEventType::PLACE_SMURF:
-		if (mpInputSystem->getMouseState(1))
-		{
-			createSmurf(((GameEvent&)theEvent).getPosition());
-		}
-		break;
-	case GameEventType::REMOVE_SMURF:
-		if (mpInputSystem->getMouseState(2))
-		{
-			Unit* theUnit = mpUnitManager->getUnitAtPosition(((GameEvent&)theEvent).getPosition());
-			if (theUnit != nullptr)
-			{
-				//mpUnitManager->killUnit(theUnit);
-			}
-		}
-		break;
+	//case GameEventType::PLACE_SMURF:
+	//	if (mpInputSystem->getMouseState(1))
+	//	{
+	//		createSmurf(((GameEvent&)theEvent).getPosition());
+	//	}
+	//	break;
+	//case GameEventType::REMOVE_SMURF:
+	//	if (mpInputSystem->getMouseState(2))
+	//	{
+	//		Unit* theUnit = mpUnitManager->getUnitAtPosition(((GameEvent&)theEvent).getPosition());
+	//		if (theUnit != nullptr)
+	//		{
+	//			//mpUnitManager->killUnit(theUnit);
+	//		}
+	//	}
+	//	break;
 	case GameEventType::SWAP_ANIMATION:
 		if (mpInputSystem->getKeyState(KeyCode::ENTER))
 		{
@@ -219,10 +231,10 @@ void Game::handleEvent(const Event& theEvent)
 
 void Game::createSmurf(Vector2D pos)
 {
-	Animation* mpSmurfAnim = new Animation(mpGraphicsBufferManager->getBuffer("SmurfSheet"), 4, 4);
-	Animation* mpDeanAnim = new Animation(mpGraphicsBufferManager->getBuffer("DeanSheet"), 4, 4);
+	Animation mpSmurfAnim = Animation(mpGraphicsBufferManager->getBuffer("SmurfSheet"), 4, 4);
+	Animation mpDeanAnim = Animation(mpGraphicsBufferManager->getBuffer("DeanSheet"), 4, 4);
 
-	vector<Animation*> mpAnimations;
+	vector<Animation> mpAnimations;
 
 	mpAnimations.push_back(mpSmurfAnim);
 	mpAnimations.push_back(mpDeanAnim);
