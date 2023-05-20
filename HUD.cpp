@@ -7,6 +7,7 @@ HUD::HUD()
 }
 HUD::~HUD()
 {
+	delete mpFont;
 }
 void HUD::startScreen()
 {

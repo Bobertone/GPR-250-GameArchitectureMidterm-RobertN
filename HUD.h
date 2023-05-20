@@ -6,7 +6,7 @@
 using namespace std;
 
 //HUD – displays score, total time elapsed, and FPS counter
-class HUD
+class HUD : public Trackable
 {
 public:
 	HUD();

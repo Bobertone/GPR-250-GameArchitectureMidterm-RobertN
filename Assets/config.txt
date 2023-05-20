@@ -4,11 +4,11 @@ SpeedMin
 SpeedMax
 40
 SpeedIncrease
-0.1
+0.2
 SpawnChance
 0.30
 SpawnIncrease
-0.001
+0.0015
 
 POINTS DATA
 PointsGain

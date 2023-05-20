@@ -38,6 +38,9 @@ public:
 	// swapAnimation – switch to a new animation
 	void swapAnimation();
 	
+	// swapState - switch the state of the opposite
+	void swapUnit();
+
 	Animation* getAnimation() { return &mAnimations[mCurrentAnimation]; }
 	Vector2D getPosition() { return mLoc; }
 	void setPosition(Vector2D newPos) { mLoc = newPos; }
@@ -45,7 +48,7 @@ public:
 
 	bool isEnabled() { return mEnabled; }
 	void enable() { mEnabled = true; }
-	void disable();
+	void disable() { mEnabled = false; }
 
 	void reset();
 

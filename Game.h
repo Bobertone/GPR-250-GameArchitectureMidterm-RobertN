@@ -63,8 +63,7 @@ private:
 	Color mBlack = Color(0, 0, 0);
 	const int DISP_WIDTH = 800;
 	const int DISP_HEIGHT = 600;
-	//Game::getInstance()->getGraphicsSystem()->getHeight()
-	//Game::getInstance()->getGraphicsSystem()->getWidth()
+
 public:
 	////-FUNCTIONS-
 
@@ -77,8 +76,6 @@ public:
 	void cleanup();
 
 	virtual void handleEvent(const Event& theEvent) override;
-
-	void createSmurf(Vector2D pos);
 
 	static void initInstance() { mspGame = new Game(); };
 	static void cleanupInstance() { delete mspGame; mspGame = nullptr; };

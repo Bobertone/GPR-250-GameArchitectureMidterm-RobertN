@@ -63,15 +63,16 @@ void Unit::swapAnimation()
 	}
 }
 
+void Unit::swapUnit()
+{
+	swapAnimation();
+	mIsRed = !mIsRed;
+}
+
 void Unit::setVelocity(Vector2D newDir, float newSpeed)
 {
 	Vector2D dir = newDir.getNormalizedVector();
 	mVel = (dir * newSpeed);
-}
-
-void Unit::disable()
-{
-	mEnabled = false;
 }
 
 void Unit::reset()

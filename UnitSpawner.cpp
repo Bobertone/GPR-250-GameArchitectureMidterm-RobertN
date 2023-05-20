@@ -34,7 +34,6 @@ void UnitSpawner::update(float dt)
 	}
 	mSpeedMin += mSpeedIncrease * (dt / 1000);
 	mSpeedMax += mSpeedIncrease * (dt / 1000);
-	cout << dt << " / 1000" << endl;
 	mSpawnChance += mSpawnIncrease * (dt / 1000);
 }
 
@@ -57,5 +56,5 @@ void UnitSpawner::spawnUnit()
 	pUnit->setVelocity(Vector2D(randXDir, randYDir), speed);
 
 	int randColor = rand() % 2;
-	if (randColor == 0) pUnit->swapAnimation();//TODO: change this to swap state entirely
+	if (randColor == 0) pUnit->swapUnit();//TODO: change this to swap state entirely
 }

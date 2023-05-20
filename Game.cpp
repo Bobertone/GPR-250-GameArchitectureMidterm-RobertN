@@ -50,7 +50,7 @@ void Game::doLoop()
 		timer.sleepUntilElapsed(mLoopTime);
 		
 		deltaTime = pPerformanceTracker->getElapsedTime("loop");
-		cout << endl << "Time for loop:" << pPerformanceTracker->getElapsedTime("loop") << " ms" << endl;
+		//cout << endl << "Time for loop:" << pPerformanceTracker->getElapsedTime("loop") << " ms" << endl;
 		elapsedGameTime += pPerformanceTracker->getElapsedTime("loop");
 	}
 	delete pPerformanceTracker;
@@ -108,9 +108,7 @@ bool Game::init()
 
 	EventSystem::getInstance()->addListener((EventType)CLOSE_GAME, this);
 	EventSystem::getInstance()->addListener((EventType)UNPAUSE_GAME, this);
-	EventSystem::getInstance()->addListener((EventType)PLACE_SMURF, this);
-	EventSystem::getInstance()->addListener((EventType)REMOVE_SMURF, this);
-	EventSystem::getInstance()->addListener((EventType)SWAP_ANIMATION, this);
+	EventSystem::getInstance()->addListener((EventType)SWAP_UNIT, this);
 	EventSystem::getInstance()->addListener((EventType)BLUE_ORB_DESTROYED, this);
 	EventSystem::getInstance()->addListener((EventType)RED_ORB_DESTROYED, this);
 
@@ -196,26 +194,15 @@ void Game::handleEvent(const Event& theEvent)
 			mIsPaused = false;
 		}
 		break;
-	//case GameEventType::PLACE_SMURF:
-	//	if (mpInputSystem->getMouseState(1))
-	//	{
-	//		createSmurf(((GameEvent&)theEvent).getPosition());
-	//	}
-	//	break;
-	//case GameEventType::REMOVE_SMURF:
-	//	if (mpInputSystem->getMouseState(2))
-	//	{
-	//		Unit* theUnit = mpUnitManager->getUnitAtPosition(((GameEvent&)theEvent).getPosition());
-	//		if (theUnit != nullptr)
-	//		{
-	//			//mpUnitManager->killUnit(theUnit);
-	//		}
-	//	}
-	//	break;
-	case GameEventType::SWAP_ANIMATION:
-		if (mpInputSystem->getKeyState(KeyCode::ENTER))
+
+	case GameEventType::SWAP_UNIT:
+		if (mpInputSystem->getMouseState(1))
 		{
-		//	mpUnitManager->getUnit(mpUnitManager->getUnitCount() - 1)->swapAnimation();
+			Unit* theUnit = mpUnitManager->getUnitAtPosition(((GameEvent&)theEvent).getPosition());
+			if (theUnit != nullptr)
+			{
+				theUnit->swapUnit();
+			}
 		}
 		break;
 	case GameEventType::RED_ORB_DESTROYED:
@@ -227,19 +214,4 @@ void Game::handleEvent(const Event& theEvent)
 	default:
 		break;
 	}
-}
-
-void Game::createSmurf(Vector2D pos)
-{
-	Animation mpSmurfAnim = Animation(mpGraphicsBufferManager->getBuffer("SmurfSheet"), 4, 4);
-	Animation mpDeanAnim = Animation(mpGraphicsBufferManager->getBuffer("DeanSheet"), 4, 4);
-
-	vector<Animation> mpAnimations;
-
-	mpAnimations.push_back(mpSmurfAnim);
-	mpAnimations.push_back(mpDeanAnim);
-
-	Unit* mpUnit = new Unit(pos, mpAnimations);
-	//mpUnitManager->addUnits(mpUnit);
-	
 }

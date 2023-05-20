@@ -14,7 +14,6 @@ UnitManager::UnitManager(const vector<Animation>& orbAnimations)
 UnitManager::~UnitManager()
 {
 	clear();
-	// maybe a cleanup(); ?
 }
 
 

@@ -21,10 +21,7 @@ void InputTranslator::handleEvent(const Event& theEvent)
 		switch(((MouseEvent&)theEvent).getButton())
 		{
 		case 1:
-			EventSystem::getInstance()->fireEvent(GameEvent(PLACE_SMURF, ((MouseEvent&)theEvent).getPosition()));
-			break;
-		case 2:
-			EventSystem::getInstance()->fireEvent(GameEvent(REMOVE_SMURF, ((MouseEvent&)theEvent).getPosition()));
+			EventSystem::getInstance()->fireEvent(GameEvent(SWAP_UNIT, ((MouseEvent&)theEvent).getPosition()));
 			break;
 		default:
 			break;
@@ -36,9 +33,6 @@ void InputTranslator::handleEvent(const Event& theEvent)
 		{
 		case ESCAPE:
 			EventSystem::getInstance()->fireEvent(GameEvent(CLOSE_GAME));
-			break;
-		case ENTER:
-			EventSystem::getInstance()->fireEvent(GameEvent(SWAP_ANIMATION));
 			break;
 		case SPACE:
 			EventSystem::getInstance()->fireEvent(GameEvent(UNPAUSE_GAME));
