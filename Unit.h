@@ -8,11 +8,13 @@ private:
 	////-DATA-
 	
 	//Status Data
-	bool mIsDead; //old
-	bool mEnabled = false; //new
+	bool mEnabled = false;
+	bool mIsRed = false;
 
 	//Movement Data
 	Vector2D mOrigin = Vector2D(0, 0);
+	const int DISP_WIDTH = 800;
+	const int DISP_HEIGHT = 600;
 	Vector2D mLoc;
 	Vector2D mVel;
 
@@ -42,10 +44,8 @@ public:
 	void setPosition(Vector2D newPos) { mLoc = newPos; }
 	void setVelocity(Vector2D newDir, float newSpeed);
 
-	bool isDead() { return mIsDead; } //old
-	bool isEnabled() { return mEnabled; } //new
-	void kill() { mIsDead = true; } //old
-	void disable(); //new
+	bool isEnabled() { return mEnabled; }
+	void disable();
 
 	void reset();
 

@@ -1,13 +1,15 @@
 #include "Unit.h"
 #include "Game.h"
 #include "GraphicsSystem.h"
+#include "GameEvent.h"
+#include "EventSystem.h"
 
 Unit::Unit(Vector2D loc, std::vector<Animation*> animations) 
 {
 	mLoc = loc;
 	mpAnimations = animations;
 	mCurrentAnimation = 0;
-	mIsDead = false;
+	mEnabled = false;
 }
 
 Unit::~Unit()
@@ -24,8 +26,19 @@ void Unit::update(float dt)
 	mLoc += mVel * (dt/1000);
 	//Update Animation
 	mpAnimations[mCurrentAnimation]->update(dt);
-
-
+	//Check if unit is off screen, disable if so
+	if (mLoc.getX() > DISP_WIDTH || mLoc.getX() < 0 || mLoc.getY() > DISP_HEIGHT || mLoc.getY() < 0)
+	{
+		if (mIsRed) 
+		{
+			EventSystem::getInstance()->fireEvent(GameEvent(RED_ORB_DESTROYED));
+		}
+		else
+		{
+			EventSystem::getInstance()->fireEvent(GameEvent(BLUE_ORB_DESTROYED));
+		}
+		disable();
+	}
 }
 
 void Unit::draw()
@@ -47,8 +60,8 @@ void Unit::swapAnimation()
 
 void Unit::setVelocity(Vector2D newDir, float newSpeed)
 {
-	mVel = (newDir.normalize() * newSpeed);
-	
+	Vector2D dir = newDir.getNormalizedVector();
+	mVel = (dir * newSpeed);
 }
 
 void Unit::disable()

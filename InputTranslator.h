@@ -10,7 +10,5 @@ public:
 	
 	//Handle events by translating them to game events
 	virtual void handleEvent(const Event& theEvent) override;
-
-
 };
 

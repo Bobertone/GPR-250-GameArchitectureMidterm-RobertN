@@ -10,7 +10,6 @@
 #include <cassert>
 #include <string>
 
-//#include "functions.h"
 #include "GraphicsSystem.h"
 #include "Game.h"
 #include "EventSystem.h"
@@ -32,9 +31,3 @@ int main()
 	system("pause");
 	return false;
 }
-
-//event system/que in lawson dean
-
-//input system fires interface events
-//event system handleEvent for interface events
-//event listener for input translator 

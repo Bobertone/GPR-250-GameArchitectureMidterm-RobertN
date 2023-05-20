@@ -6,6 +6,8 @@
 #include <string>
 #include <assert.h>
 #include <EventListener.h>
+#include "Color.h"
+#include <Vector2D.h>
 
 using namespace std;
 
@@ -14,9 +16,16 @@ class InputSystem;
 class UnitManager;
 class GraphicsBufferManager;
 class InputTranslator;
+class DataManager;
+class HUD;
 
 //Game - The class which holds all systems and has the game loop
-//Make this global in main
+//is global in main
+/*
+• Welcome screen (hit space to start)
+• Pause screen (hit space to unpause, esc to exit) – entered by hitting esc
+• When the user left clicks on an orb it changes animation
+*/
 class Game : public EventListener
 {
 private:	 
@@ -31,7 +40,9 @@ private:
 	DataManager* mpDataManager = nullptr;
 
 	HUD* mpHUD = nullptr;
-
+	bool mGameStart = true;
+	bool mGameOver = false;
+	bool mIsPaused = true;
 	bool mIsRunning = false;
 	float mLoopTime = 16.7f;
 

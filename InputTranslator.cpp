@@ -41,7 +41,7 @@ void InputTranslator::handleEvent(const Event& theEvent)
 			EventSystem::getInstance()->fireEvent(GameEvent(SWAP_ANIMATION));
 			break;
 		case SPACE:
-			EventSystem::getInstance()->fireEvent(GameEvent(TOGGLE_ANIMATION));
+			EventSystem::getInstance()->fireEvent(GameEvent(UNPAUSE_GAME));
 			break;
 		default:
 			break;

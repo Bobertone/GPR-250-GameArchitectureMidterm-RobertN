@@ -5,14 +5,6 @@
 #include "KeyCode.h"
 //InputSystem - The class which has functions to get keyboard / mouse state.Should not contain any game specific code
 
-/*
-• Left mouse down will place Unit at mouse location (centered)
-• “F” key will speed up animation by a visible amount
-• “S” key will slow down animation by a visible amount
-• “Enter” key will switch between the 2 animations
-• “Escape” key will close application
-*/
-
 class InputSystem : public Trackable
 {
 private:
