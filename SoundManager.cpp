@@ -17,7 +17,7 @@ void SoundManager::cleanup()
 void SoundManager::addSample(const std::string& key, const std::string& filepath)
 {
 	ALLEGRO_SAMPLE* sample = loadSample(filepath);
-
+	if (sample == nullptr) { std::cout << "file at " + filepath + " not found"<<std::endl; }
 	if (containsKey(key))
 	{
 		delete mSoundMap[key];

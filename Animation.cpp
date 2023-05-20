@@ -19,6 +19,25 @@ Animation::Animation(GraphicsBuffer* spriteSheetBuffer, int rows, int columns)
 
 }
 
+Animation::Animation(GraphicsBuffer* spriteSheetBuffer, int rows, int columns, int startingRow, int startingColumn, int endingRow, int endingColumn)
+{
+	for (int y = 0; y <= endingRow - startingRow; y++)
+	{
+		for (int x = 0; x < endingColumn - startingColumn; x++)
+		{
+			Sprite frame(spriteSheetBuffer,
+				Vector2D(
+					(x + startingColumn) * spriteSheetBuffer->getWidth() / columns,
+					(y + startingRow) * spriteSheetBuffer->getHeight() / rows),
+				spriteSheetBuffer->getWidth() / columns,
+				spriteSheetBuffer->getHeight() / rows);
+
+			mSprites.push_back(frame);
+		}
+	}
+
+}
+
 Animation::~Animation()
 {
 }

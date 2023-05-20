@@ -29,6 +29,7 @@ public:
 	// Constructor(s) / destructor
 	// Some way of getting Sprite’s into Animation either through constructor or an addSprite function
 	Animation(GraphicsBuffer* spriteSheetBuffer, int rows, int columns);
+	Animation(GraphicsBuffer* spriteSheetBuffer, int rows, int columns, int startingRow, int startingColumn, int endingRow, int endingColumn);
 	~Animation();
 	
 	// update – figure out what Sprite is “current”

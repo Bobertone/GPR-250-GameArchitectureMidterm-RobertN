@@ -36,7 +36,6 @@ float DataManager::getFloat(const std::string& key)
     std::getline(inputFile, line);
     targetFloat = std::stof(line);
     
-
     inputFile.close();
     return targetFloat;
 }
@@ -67,9 +66,8 @@ std::string DataManager::getString(const std::string& key)
         return "";
     }
 
-    while (std::getline(inputFile, line)) {
-        targetString = line;
-    }
+    std::getline(inputFile, line);
+    targetString = line;
 
     inputFile.close();
     return targetString;

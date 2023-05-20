@@ -3,6 +3,7 @@
 #include "GraphicsSystem.h"
 #include "GameEvent.h"
 #include "EventSystem.h"
+#include "SoundManager.h"
 
 Unit::Unit(Vector2D loc, const std::vector<Animation>& animations) 
 {
@@ -37,10 +38,12 @@ void Unit::update(float dt)
 		if (mIsRed) 
 		{
 			EventSystem::getInstance()->fireEvent(GameEvent(RED_ORB_DESTROYED));
+			Game::getInstance()->getSoundManager()->playSample("loosePointsSound", false);
 		}
 		else
 		{
 			EventSystem::getInstance()->fireEvent(GameEvent(BLUE_ORB_DESTROYED));
+			Game::getInstance()->getSoundManager()->playSample("winPointsSound", false);
 		}
 		disable();
 	}

@@ -18,6 +18,7 @@ class UnitManager;
 class GraphicsBufferManager;
 class InputTranslator;
 class DataManager;
+class SoundManager;
 class HUD;
 
 //Game - The class which holds all systems and has the game loop
@@ -38,6 +39,8 @@ private:
 	
 	GraphicsBufferManager* mpGraphicsBufferManager = nullptr;
 	DataManager* mpDataManager = nullptr;
+	DataManager* mpSoundDataManager = nullptr;
+	SoundManager* mpSoundManager = nullptr;
 	UnitManager* mpUnitManager = nullptr;
 	
 	UnitSpawner* mpUnitSpawner = nullptr;
@@ -84,5 +87,6 @@ public:
 	GraphicsSystem* getGraphicsSystem() { return mpGraphicsSystem; }
 	DataManager* getDataManager() { return mpDataManager; }
 	UnitManager* getUnitManager() { return mpUnitManager; }
+	SoundManager* getSoundManager() { return mpSoundManager; }
 
 };

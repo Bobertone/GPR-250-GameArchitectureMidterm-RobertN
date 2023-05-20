@@ -1,0 +1,8 @@
+hitSound
+assets/sounds/connect.wav
+missSound
+assets//sounds//disconnect.wav
+winPointsSound
+../../shared/assets/minetrap/BLIP.WAV
+losePointsSound
+..//..//shared//assets//minetrap//BUMP2.WAV

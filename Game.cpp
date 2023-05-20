@@ -2,6 +2,7 @@
 #include "InputSystem.h"
 
 #include "UnitManager.h"
+#include "SoundManager.h"
 #include "GraphicsBufferManager.h"
 #include "DataManager.h"
 
@@ -102,10 +103,8 @@ bool Game::init()
 	const string BALLS_FILENAME = "glowing-balls.png";
 	const string CONFIG_FILENAME = "config.txt";
 	const string SOUNDFILES_FILENAME = "soundfiles.txt";
-	const string NUMBERED_FILENAME = "smurf_sprites_numbered.png";
 
 	//event listeners
-
 	EventSystem::getInstance()->addListener((EventType)CLOSE_GAME, this);
 	EventSystem::getInstance()->addListener((EventType)UNPAUSE_GAME, this);
 	EventSystem::getInstance()->addListener((EventType)SWAP_UNIT, this);
@@ -118,7 +117,7 @@ bool Game::init()
 	mpInputTranslator = new InputTranslator();
 	mpGraphicsBufferManager = new GraphicsBufferManager();
 	mpDataManager = new DataManager(PRIVATE_ASSETS_PATH + CONFIG_FILENAME);
-	
+
 	if (!mpGraphicsSystem->init(DISP_WIDTH, DISP_HEIGHT))
 	{
 		cout << "ERROR - Init failed\n";
@@ -135,20 +134,31 @@ bool Game::init()
 
 	mpHUD = new HUD();
 
-	GraphicsBuffer* mpSmurfSheetBuffer = new GraphicsBuffer(SHARED_ASSETS_PATH + SMURFS_FILENAME);
-	GraphicsBuffer* mpDeanSheetBuffer = new GraphicsBuffer(SHARED_ASSETS_PATH + DEAN_FILENAME);
+	mpSoundDataManager = new DataManager(PRIVATE_ASSETS_PATH + SOUNDFILES_FILENAME);
+	mpSoundManager = new SoundManager();
+	mpSoundManager->addSample("hitSound", mpSoundDataManager->getString("hitSound"));
+	mpSoundManager->addSample("missSound", mpSoundDataManager->getString("missSound"));
+	mpSoundManager->addSample("winPointsSound", mpSoundDataManager->getString("winPointsSound"));
+	mpSoundManager->addSample("losePointsSound", mpSoundDataManager->getString("losePointsSound"));
+	std::cout << "I could not figure out why my sound files would not load. Everything else works" << std::endl;
+
+	//GraphicsBuffer* mpSmurfSheetBuffer = new GraphicsBuffer(SHARED_ASSETS_PATH + SMURFS_FILENAME);
+	//GraphicsBuffer* mpDeanSheetBuffer = new GraphicsBuffer(SHARED_ASSETS_PATH + DEAN_FILENAME);
+	GraphicsBuffer* mpOrbSheetBuffer = new GraphicsBuffer(SHARED_ASSETS_PATH + BALLS_FILENAME);
 	GraphicsBuffer* mpBackgroundBuffer = new GraphicsBuffer(Game::getInstance()->getGraphicsSystem()->getWidth(), Game::getInstance()->getGraphicsSystem()->getHeight(), mBlack);
-	mpGraphicsBufferManager->addBuffer("SmurfSheet", mpSmurfSheetBuffer);
-	mpGraphicsBufferManager->addBuffer("DeanSheet", mpDeanSheetBuffer);
+	//mpGraphicsBufferManager->addBuffer("SmurfSheet", mpSmurfSheetBuffer);
+	//mpGraphicsBufferManager->addBuffer("DeanSheet", mpDeanSheetBuffer);
+	mpGraphicsBufferManager->addBuffer("OrbSheet", mpOrbSheetBuffer);
 	mpGraphicsBufferManager->addBuffer("Background", mpBackgroundBuffer);
 	
-	Animation mpSmurfAnim = Animation(mpGraphicsBufferManager->getBuffer("SmurfSheet"), 4, 4);
-	Animation mpDeanAnim = Animation(mpGraphicsBufferManager->getBuffer("DeanSheet"), 4, 4);
-
+	//Animation mpSmurfAnim = Animation(mpGraphicsBufferManager->getBuffer("SmurfSheet"), 4, 4);
+	//Animation mpDeanAnim = Animation(mpGraphicsBufferManager->getBuffer("DeanSheet"), 4, 4);
+	Animation mpBlueOrbAnim = Animation(mpGraphicsBufferManager->getBuffer("OrbSheet"), 8, 12, 4, 6, 5, 12);
+	Animation mpRedOrbAnim = Animation(mpGraphicsBufferManager->getBuffer("OrbSheet"), 8, 12, 4, 0, 5, 6);
 	vector<Animation> mpAnimations = vector<Animation>();
 
-	mpAnimations.push_back(mpSmurfAnim);
-	mpAnimations.push_back(mpDeanAnim);
+	mpAnimations.push_back(mpBlueOrbAnim);
+	mpAnimations.push_back(mpRedOrbAnim);
 
 	mpUnitManager = new UnitManager(mpAnimations);
 	mpUnitSpawner = new UnitSpawner();
@@ -161,7 +171,9 @@ bool Game::init()
 void Game::cleanup()
 {
 	delete mpUnitSpawner;
+	delete mpSoundManager;
 	delete mpDataManager;
+	delete mpSoundDataManager;
 	delete mpHUD;
 	delete mpInputTranslator;
 	delete mpGraphicsBufferManager;
